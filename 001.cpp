@@ -7,16 +7,9 @@ using namespace std;
 
 void selectionSort(int *a, int n)
 {
-	int min;
-
-	for (int i = 0; i < n - 1; i++)
-	{
-		min = i;
-		for (int j = i + 1; j < n; j++)
-			if (a[min] < a[j])
-				min = j;
-		swap(a[min], a[i]);
-	}
+	 for (unsigned int i = 0; i < n/2; i++){
+        swap(a[i], a[n-i-1]);
+    }
 } 
 
 bool read_numbers(int *a, int n)
