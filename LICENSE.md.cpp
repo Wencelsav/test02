@@ -21,15 +21,16 @@ void  doublereverse(int *& ar,unsigned int position,unsigned int n){
     }
 
 }
-int main() {
-    unsigned int n;
+bool read_numbers(int *a, int n)
+{ unsigned int n;
 
     string line;
     getline(cin,line);
     istringstream numstream(line);
+    bool success = true;
     if(!(numstream>>n)){
-        cout<<"An error has occuried while reading input data.";
-        exit(0);
+        success = false;
+        break;
     }
 
     getline(cin,line);
@@ -37,8 +38,8 @@ int main() {
     int *arr=new int[n];
     for(unsigned int i=0;i<n;i++){
         if(!(arrstream>>arr[i])){
-            cout<<"An error has occuried while reading input data.";
-            exit(0);
+           success = false;
+           break;
         }
 
     }
@@ -46,17 +47,24 @@ int main() {
     getline(cin,line);
     istringstream posstream(line);
     if(!(posstream>>npos)){
-        cout<<"An error has occuried while reading input data.";
-        exit(0);
+       success = false;
+       break;
     }
+    
+    }
+int main() {
+    unsigned int n;
+
+   if (read_numbers(arr, n,npos)) 
+   {
     doublereverse(arr,n-npos,n);
     reverse(arr,n);
-
 
 
     for(unsigned int i=0;i<n;i++){
         cout<<arr[i]<<" ";
     }
+   }
     delete[] arr;
     return 0;
 }
