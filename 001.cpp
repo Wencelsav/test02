@@ -39,6 +39,7 @@ int main() {
 	int n;
 	int *a;
 	cin >> n;
+	if (n>0){
 	cin.get();
 	a = new int[n];
 	if (read_numbers(a, n)) {
@@ -46,6 +47,10 @@ int main() {
 		for (int i = 0; i < n; i++) {
 			cout << a[i] << " ";
 		}
+	}
+	else {
+		cout << "An error has occured while reading input data.";
+	}
 	}
 	else {
 		cout << "An error has occured while reading input data.";
