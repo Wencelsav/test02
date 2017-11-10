@@ -79,7 +79,7 @@ bool get_size(unsigned int& a,
 	}
 	return false;
 }
-bool get_sdvig(unsigned int &sdvig)
+bool get_shift(unsigned int &sdvig)
 {
 	string header;
 
@@ -93,12 +93,12 @@ bool get_sdvig(unsigned int &sdvig)
 	}
 	return false;
 }
-void do_sdvig(float **&mat,
+void shiting(float **&mat,
 	int a,
 	int b,
-	int sdvig) {
+	int shift) {
 	float hp, hp1;
-	for (int s = 0; s<sdvig; s++) {
+	for (int s = 0; s<shift; s++) {
 		hp = mat[0][0];
 		hp1 = 0;
 		for (int i = 0; i<a - 1; i++) {
@@ -131,14 +131,14 @@ void do_sdvig(float **&mat,
 int main()
 {
 	float** mat;
-	unsigned int a, b, sdvig;
+	unsigned int a, b, shift;
 
 
 	if (get_size(a, b))
 	{
-		if (get_matrix(mat, a, b) && get_sdvig(sdvig))
+		if (get_matrix(mat, a, b) && get_shift(shift))
 		{
-			do_sdvig(mat, a, b, sdvig);
+			shiting(mat, a, b, shift);
 			cout_matrix(mat, a, b);
 		}
 		else {
