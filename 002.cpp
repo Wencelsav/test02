@@ -1,52 +1,68 @@
 #include <iostream>
-#include <utility>
-#include <string>
 #include <sstream>
-#include <limits>
 using namespace std;
+void reverse(int *& a, int n) {
+	for (int j = 0; j<n / 2; j++) {
 
+		swap(a[j], a[n - j - 1]);
 
+	}
+}
+void  doublereverse(int *& a, int pos, int n) {
+	for (int j = 0; j<pos / 2; j++) {
 
-bool read_numbers(int *a, int n)
-{
-	string string;
-	getline(cin, string);
-	istringstream stream(string);
-	bool success = true;
-	for (int i = 0; i < n; ++i) {
-		if (!(stream >> a[i])) {
-			success = false;
-			break;
-		}
+		swap(a[j], a[pos - j - 1]);
+
+	}
+	for (int i = 0; i<(n - pos) / 2; i++) {
+
+		swap(a[pos + i], a[n - i - 1]);
+
 	}
 
-	return success;
 }
 
 int main() {
-	 
-    int n,k; 
-    cin >> n;
-    cin.get()
-    int *a = new int[n];
-    cin >>k;
-    if (n>0){
-    int b = new int[n];
-    for (int i = n-1; i >= 0; i--) {
-        if(i+k >= n){
-            b[i+k-n] = a[i];
-        }
-        else{
-            b[i+n] = a[i];
-        }
-    }
-   
-		}
-	
-	else {
-		cout << "An error has occured while reading input data.";
+	int n;
+	char k;
+	string line;
+	getline(cin, line);
+	istringstream nstream(line);
+	if (!(nstream >> n) || !(n>0)) {
+		cout << "An error has occuried while reading input data.";
+		exit(0);
 	}
 
-	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+	getline(cin, line);
+	istringstream astream(line);
+	int *a = new int[n];
+	for (unsigned int i = 0; i<n; i++) {
+		if (!(astream >> a[i])) {
+			cout << "An error has occuried while reading input data.";
+			exit(0);
+		}
+
+	}
+	if (astream >> k) {
+		cout << "An error has occuried while reading input data.";
+		exit(0);
+	}
+	int npos;
+	getline(cin, line);
+	istringstream nposstream(line);
+	if (!(nposstream >> npos) || !(npos>0)) {
+		cout << "An error has occuried while reading input data.";
+		exit(0);
+	}
+	doublereverse(a, n - npos, n);
+	reverse(a, n);
+
+
+
+	for (unsigned int i = 0; i<n; i++) 
+	{
+		cout << a[i] << " ";
+	}
+	delete[] a;
 	return 0;
 }
