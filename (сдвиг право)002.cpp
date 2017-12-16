@@ -3,25 +3,17 @@
 using namespace std;
 int reverse(int *a, int n) {
 	for (int i = 0, j = n - 1; i < j; ++i, --j) {
-
-		int t = a[i];
-		a[i] = a[j];
-		a[j] = t;
+		swap(a[i], a[j]);
 	}
 	return 0;
 }
 void  seconfd_reverse(int *& a, int number_shift, int n) {
 	for (int j = 0; j<number_shift / 2; j++) {
-
 		swap(a[j], a[number_shift - j - 1]);
-
 	}
 	for (int i = 0; i<(n - number_shift) / 2; i++) {
-
 		swap(a[number_shift + i], a[n - i - 1]);
-
 	}
-
 }
 
 bool read(int * a, int n)
@@ -49,7 +41,7 @@ int main() {
 		istringstream stream(s);
 		int * a = new int[n];
 		if (read(a, n)) {
-		    cin >> number_shift;
+			cin >> number_shift;
 			reverse(a, n);
 			seconfd_reverse(a, number_shift, n);
 			for (int i = 0; i < n; ++i)
