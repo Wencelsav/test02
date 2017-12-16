@@ -10,15 +10,17 @@ int reverse (int *a, int n){
 	}
 	return 0;
 }
-bool read(int * a, unsigned int size) {
+bool read(int * a, int n) {
 	string stroka;
+	int a_count = 0;
 	getline(cin, stroka);
 	istringstream stream(stroka);
-	for (unsigned int i = 0; i < size; ++i) {
+	for (int i = 0; i < n; ++i) {
 		if (!(stream >> a[i])) {
 			return false;
 		}
-	}
+	}if (a_count == n && stream.eof()) return true;
+	else return false;
 	return true;
 }
 int main() {
