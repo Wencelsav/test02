@@ -1,103 +1,57 @@
-#include<iostream>
-#include<sstream>
-
+#include <iostream>
+#include <sstream>
 using namespace std;
 
-void revers(int * array, int size)
-{
-	unsigned int k = size - 1;
-	for (int i = 0; i < (size / 2) ; i++)
-	{
-		swap(array[i], array[k]);
-		k--;
+int reverse(int *a, int n) {
+	for (int i = 0, j = n - 1; i < j; ++i, --j) {
+		swap(a[i], a[j]);		
 	}
+	return 0;
 }
-void revers_two(int * array, int size,int sdvig)
-{
-	unsigned int k = size - 1;
-	for (int i = sdvig; i < ((size - sdvig) / 2) + sdvig ; i++)
-	{
+void  seconfd_reverse(int *& a, int number_shift, int n) {	
+		int j = n - 1;
+		for (int i = number_shift; i < ((n - number_shift) / 2) + number_shift; i++)
+		{
+			swap(a[i], a[j]);
+			j--;
+		}
+	}
 
-		swap(array[i], array[k]);
-		k--;
-	}
-}
-bool read(int * array, int size)
+bool read(int * a, int n)
 {
 	string mas;
-	unsigned int i = 0, array_count = 0;
+	int array_count = 0;
 	getline(cin, mas);
 	istringstream stream(mas);
-	for (i; i < size; i++)
+	for (int i = 0; i < n; i++)
 	{
-		if (stream >> array[i])
+		if (stream >> a[i])
 		{
 			array_count++;
 		}
 	}
-	if (array_count == size && stream.eof()) return true;
+	if (array_count == n && stream.eof()) return true;
 	else return false;
 }
-void print(int * array, int size)
-{
-	for (unsigned int i = 0; i < size; i++)
-	{
-		cout << array[i] << " ";
-	}
-}
 
-bool size_s(int &size)
-{
-	string str;
-	getline(cin, str);
-	istringstream stream(str);
-	if (!(stream >> size))
-	{
-		return false;
-	}
-	else
-	{
-		if (stream.eof()) { return true; }
-		else { return false; }
-	}
-}
-bool sdv (int &sdvig)
-{
-	string str;
-	getline(cin, str);
-	istringstream stream(str);
-	if (!(stream >> sdvig))
-	{
-		return false;
-	}
-	else
-	{
-		if (stream.eof()) { return true; }
-		else { return false; }
-	}
-}
-int main()
-{
-	int size,sdvig;
-	if (size_s(size) && size > 0 )
-	{
-		int * array;
-		array = new int[size];
-		if (read(array, size)&& sdv(sdvig))
-		{
-			revers(array, sdvig); 
-			revers_two(array, size, sdvig);
-			revers(array, size); 
-			print(array, size);
-			cin.get();
+int main() {
+	int n = 0, number_shift;
+	if ((cin >> n) && (n > 1)) {
+		string s;
+		getline(cin, s);
+		istringstream stream(s);
+		int * a = new int[n];
+		if (read(a, n)) {
+			cin >> number_shift;
+			reverse(a, n);
+			seconfd_reverse(a, number_shift, n);
+			reverse(a, n);
+			for (int i = 0; i < n; ++i)
+				cout << " " << a[i];
 		}
-		else
-		{
-			cout << "fail input ";
-			cin.get();
-		}
-		delete[] array;
+		else { cout << "An error has occured while reading input data." << endl; }
+		delete[] a;
 	}
-	else { cout << "size error"; cin.get(); }
+	else { cout << "An error has occured while reading input data." << endl; }
 	return 0;
 }
