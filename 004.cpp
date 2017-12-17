@@ -1,152 +1,100 @@
 #include <iostream>
+#include <iomanip> 
 #include <sstream>
+
 using namespace std;
-void destroy(int ** mat,
-	int b)
-{
-	for (int i = 0; i < b; ++i) {
-		delete[] mat[i];
-	}
-	delete[] mat;
-}
 
-int** create_matrix(int a,
-	int b)
+int** create_(int row, int col)
 {
-	int** matrix;
-	matrix = new int*[b];
-	for (int i = 0; i < b; ++i) {
-		matrix[i] = new int[a];
-		for (int j = 0; j < a; ++j) {
-			matrix[i][j];
+	int ** a = new int*[row];
+	for (int i = 0; i < row; i++)
+	{
+		a[i] = new int[col];
+	}
+	return a;
+}
+void delete_ (int **a, int row) {
+	for (int i = 0; i < row; i++)
+		delete[] a[i];
+	delete a;
+}
+void spiral(int **a, int row, int column ) {
+	int i = 0, j, k = 0, p = 1;
+
+	while (i < row*column)
+	{
+		k++;
+		for (j = k - 1; j<column - k + 1; j++)
+		{
+			a[k - 1][j] = p++;
+			i++;
 		}
-	}
-	return matrix;
-}
 
-
-bool get_matrix(int**& mat,
-	int na,
-	int nb)
-{
-	mat = create_matrix(na, nb);
-
-	for (int j = 0; j < nb; j++) {
-		string new_row;
-		getline(cin, new_row);
-		istringstream stream(new_row);
-		for (int i = 0; i < na; i++) {
-			if (!(stream >> mat[j][i])) {
-
-				return false;
-			}
+		for (j = k; j<row - k + 1; j++)
+		{
+			a[j][column - k] = p++;
+			i++;
 		}
-	}
-	return true;
-}
 
-void cout_matrix(int** mat,
-	int na,
-	int nb)
-{
-
-	for (int j = 0; j < nb; j++) {
-		for (int i = 0; i < na; i++) {
-			if (mat[j][i] == -0) {
-				mat[j][i] = 0;
-			}
-			cout << mat[j][i] << "\t";
+		for (j = column - k - 1; j >= k - 1; j--)
+		{
+			a[row - k][j] = p++;
+			i++;
 		}
-		cout << "\n";
+
+		for (j = row - k - 1; j >= k; j--)
+		{
+			a[j][k - 1] = p++;
+			i++;
+		}
+
 	}
+
 }
-bool get_size(int& a,
-	int& b)
+bool get_size(int& columns,int& rows)
 {
 	string header;
-	int nb;
-	int na;
-	char razdel;
+	int nrows;
+	int ncolumns;
+	char op;
 	getline(cin, header);
 	istringstream str(header);
 
-	if ((str >> nb) && (str >> razdel) && (str >> na) && (razdel == ',') && (nb>0) && (na>0))
+	if ((str >> nrows) && (str >> op) && (str >> ncolumns) && (op == ',') && (nrows>0) && (ncolumns>0))
 	{
-		b = nb;
-		a = na;
+		rows = nrows;
+		columns = ncolumns;
 		return true;
 	}
 	return false;
 }
-void create_ulitka(int **&mat,
-	int a,
-	int b,
-	int level,
-	int startnum
-)
+void cout_(int** matrix,
+	int ncolumns,
+	int nrows)
 {
-	if (a == 0 || b == 0) {
-		return;
-	}
-	if (a == 1 || b == 1) {
-		int hp = 0;
-		for (int i = 0; i<a; i++) {
 
-			mat[0 + level][i + level] = startnum + hp;
-			hp++;
-
-
+	for (int j = 0; j < nrows; j++) {
+		for (int i = 0; i < ncolumns; i++) {
+			if (matrix[j][i] == -0) {
+				matrix[j][i] = 0;
+			}
+			cout << matrix[j][i] << "\t";
 		}
-		for (int i = 1; i<b; i++) {
-			mat[level + i][level + a - 1] = startnum + hp;
-			hp++;
-
-		}
-		return;
+		cout << "\n";
 	}
-
-	int hp = 0;
-	for (int i = 0; i<a; i++) {
-
-		mat[0 + level][i + level] = startnum + hp;
-		hp++;
-
-
-	}
-	for (int i = 1; i<b; i++) {
-		mat[level + i][level + a - 1] = startnum + hp;
-		hp++;
-
-	}
-	for (int i = a - 2; i>-1; i--) {
-		mat[level + b - 1][level + i] = startnum + hp;
-		hp++;
-
-	}
-	for (int i = b - 2; i>0; i--) {
-		mat[level + i][0 + level] = startnum + hp;
-		hp++;
-
-	}
-	if (a - 2<0 || b - 2<0) {
-		return;
-	}
-	create_ulitka(mat, a - 2, b - 2, level + 1, startnum + hp);
-
-
 }
 int main()
 {
-	int** mat;
-	int a, b;
+	int** a;
+	int columns, rows;
 
 
-	if (get_size(a, b))
+	if (get_size(columns, rows))
 	{
-		mat = create_matrix(a, b);
-		create_ulitka(mat, a, b, 0, 1);
-		cout_matrix(mat, a, b);
-		destroy(mat, b);
+		a = create_(columns, rows);
+		spiral(a, columns, rows);
+		cout_(a, columns, rows);
+		delete_(a, rows);
 	}
 	else {
 		cout << "An error has occured while reading input data";
